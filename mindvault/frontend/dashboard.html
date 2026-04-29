@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>MindVault — Dashboard</title>
+    <link rel="stylesheet" href="./css/main.css" />
+    <link rel="stylesheet" href="./css/dashboard.css" />
+  </head>
+  <body>
+    <canvas class="neural-bg" id="neural"></canvas>
+
+    <div class="dash-shell">
+      <div class="glass navbar">
+        <div class="brand">
+          <div class="mark" aria-hidden="true">🧠</div>
+          <div class="name">MindVault</div>
+        </div>
+        <div class="nav-right">
+          <button class="toggle" id="themeToggle" type="button" aria-label="Toggle light/dark theme" style="margin:0">
+            <span class="dot" aria-hidden="true"></span>
+            <span class="label" id="themeLabel">Dark</span>
+          </button>
+          <div class="user-pill">
+            <div class="avatar" id="avatar">U</div>
+            <div class="username" id="navUsername">User</div>
+          </div>
+          <button class="btn secondary logout" id="logoutBtn" type="button">Logout</button>
+        </div>
+      </div>
+
+      <div class="grid">
+        <div class="glass panel">
+          <h2>Brain Dump</h2>
+          <textarea
+            class="textarea"
+            id="dumpInput"
+            placeholder="Spill your mind here... one thought per line."
+          ></textarea>
+          <div class="meta-row">
+            <div id="wordCount">0 words</div>
+            <div id="lineCount">0 lines</div>
+          </div>
+          <div class="cta-row">
+            <button class="btn organize" id="organizeBtn" type="button">
+              Organize My Mind
+              <span class="spinner" id="orgSpin" style="display:none"></span>
+            </button>
+            <button class="btn secondary" id="clearBtn" type="button">Clear</button>
+          </div>
+
+          <div class="score-wrap">
+            <div class="score-left">
+              <div class="label">Mental Clarity Score</div>
+              <div class="value" id="scoreValue">—</div>
+              <div class="label" id="scoreLabel">Waiting for your dump…</div>
+            </div>
+            <svg class="score-ring" viewBox="0 0 120 120" aria-label="Mental clarity score">
+              <defs>
+                <filter id="softGlow">
+                  <feGaussianBlur stdDeviation="1.8" result="blur" />
+                  <feMerge>
+                    <feMergeNode in="blur" />
+                    <feMergeNode in="SourceGraphic" />
+                  </feMerge>
+                </filter>
+              </defs>
+              <circle
+                cx="60"
+                cy="60"
+                r="48"
+                stroke="rgba(255,255,255,.10)"
+                stroke-width="10"
+                fill="none"
+              ></circle>
+              <circle
+                cx="60"
+                cy="60"
+                r="48"
+                stroke="var(--teal)"
+                stroke-width="10"
+                fill="none"
+                stroke-linecap="round"
+                transform="rotate(-90 60 60)"
+                id="scoreArc"
+                style="filter:url(#softGlow)"
+              ></circle>
+              <text x="60" y="60" text-anchor="middle" dominant-baseline="central" font-size="22" id="scoreNum">
+                0
+              </text>
+              <text x="60" y="78" text-anchor="middle" class="sub" font-size="10">/ 100</text>
+            </svg>
+          </div>
+        </div>
+
+        <div class="right">
+          <div class="glass panel">
+            <h2>Organized Results</h2>
+            <div class="cats">
+              <div class="glass cat-card accent-tasks">
+                <div class="cat-head">
+                  <div class="cat-title">📌 Tasks</div>
+                  <div class="badge" id="tasksCount">0</div>
+                </div>
+                <div class="list" id="tasksList"><div class="empty">Nothing here yet</div></div>
+              </div>
+              <div class="glass cat-card accent-ideas">
+                <div class="cat-head">
+                  <div class="cat-title">💡 Ideas</div>
+                  <div class="badge" id="ideasCount">0</div>
+                </div>
+                <div class="list" id="ideasList"><div class="empty">Nothing here yet</div></div>
+              </div>
+              <div class="glass cat-card accent-worries">
+                <div class="cat-head">
+                  <div class="cat-title">😟 Worries</div>
+                  <div class="badge" id="worriesCount">0</div>
+                </div>
+                <div class="list" id="worriesList"><div class="empty">Nothing here yet</div></div>
+              </div>
+              <div class="glass cat-card accent-notes">
+                <div class="cat-head">
+                  <div class="cat-title">📝 Notes</div>
+                  <div class="badge" id="notesCount">0</div>
+                </div>
+                <div class="list" id="notesList"><div class="empty">Nothing here yet</div></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="glass history">
+            <div class="history-top">
+              <h3 id="historyTitle">Past Dumps</h3>
+              <div class="search">
+                <span class="icon">🔍</span>
+                <input id="searchInput" type="text" placeholder="Search your past dumps…" />
+              </div>
+            </div>
+            <div class="hist-list" id="historyList"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="loading-overlay" id="pageLoader" aria-hidden="true">
+      <div class="glass loading-card">
+        <div class="loading-title" id="loaderTitle">MindVault</div>
+        <div class="loading-sub" id="loaderSub">Loading your vault…</div>
+        <div class="bar"><i></i></div>
+      </div>
+    </div>
+
+    <div class="modal-backdrop" id="modalBackdrop" role="dialog" aria-modal="true" aria-hidden="true">
+      <div class="glass modal">
+        <h4>Delete this dump?</h4>
+        <p>This can’t be undone.</p>
+        <div class="modal-actions">
+          <button class="btn secondary" id="cancelDelete" type="button">Cancel</button>
+          <button class="btn" id="confirmDelete" type="button" style="background:linear-gradient(90deg, rgba(244,63,94,1), rgba(251,191,36,.55)); color:#160306">
+            Delete
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script src="./js/categorizer.js"></script>
+    <script src="./js/score.js"></script>
+    <script src="./js/dashboard.js"></script>
+  </body>
+</html>

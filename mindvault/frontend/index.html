@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>MindVault — Sign in</title>
+    <link rel="stylesheet" href="./css/main.css" />
+  </head>
+  <body>
+    <canvas class="neural-bg" id="neural"></canvas>
+    <div class="app-shell">
+      <div class="glass form-wrap">
+        <div class="logo">
+          <div class="logo-mark" aria-hidden="true">🧠</div>
+          <div class="logo-title">MindVault</div>
+          <div class="logo-sub">Brain Dump Organizer</div>
+        </div>
+
+        <div class="theme-toggle" aria-label="Theme toggle">
+          <button class="toggle" id="themeToggle" type="button" aria-label="Toggle light/dark theme">
+            <span class="dot" aria-hidden="true"></span>
+            <span class="label" id="themeLabel">Dark</span>
+          </button>
+        </div>
+
+        <div class="tabs" role="tablist" aria-label="Auth tabs">
+          <button class="tab active" id="tabLogin" type="button" role="tab" aria-selected="true">
+            Login
+          </button>
+          <button class="tab" id="tabRegister" type="button" role="tab" aria-selected="false">
+            Register
+          </button>
+        </div>
+
+        <div class="forms">
+          <div class="forms-inner" id="formsInner" data-mode="login">
+            <form class="form" id="loginForm" novalidate>
+              <div class="field">
+                <div class="label"><span>Email</span></div>
+                <input id="loginEmail" type="email" autocomplete="email" placeholder="you@domain.com" />
+                <div class="error" id="loginEmailErr"></div>
+              </div>
+              <div class="field">
+                <div class="label"><span>Password</span></div>
+                <input id="loginPassword" type="password" autocomplete="current-password" placeholder="••••••••" />
+                <div class="error" id="loginPasswordErr"></div>
+              </div>
+              <button class="btn" id="loginBtn" type="submit">
+                Sign in
+                <span class="spinner" id="loginSpin" style="display:none"></span>
+              </button>
+              <div class="hint" id="loginGlobalErr" style="min-height:18px;color:rgba(244,63,94,.95)"></div>
+            </form>
+
+            <form class="form" id="registerForm" novalidate>
+              <div class="field">
+                <div class="label"><span>Username</span></div>
+                <input id="regUsername" type="text" autocomplete="username" placeholder="3–20 characters" />
+                <div class="error" id="regUsernameErr"></div>
+              </div>
+              <div class="field">
+                <div class="label"><span>Email</span></div>
+                <input id="regEmail" type="email" autocomplete="email" placeholder="you@domain.com" />
+                <div class="error" id="regEmailErr"></div>
+              </div>
+              <div class="field">
+                <div class="label"><span>Password</span></div>
+                <input id="regPassword" type="password" autocomplete="new-password" placeholder="6+ characters" />
+                <div class="error" id="regPasswordErr"></div>
+              </div>
+              <div class="field">
+                <div class="label"><span>Confirm Password</span></div>
+                <input id="regConfirm" type="password" autocomplete="new-password" placeholder="Repeat password" />
+                <div class="error" id="regConfirmErr"></div>
+              </div>
+              <button class="btn" id="regBtn" type="submit">
+                Create account
+                <span class="spinner" id="regSpin" style="display:none"></span>
+              </button>
+              <div class="hint" id="regGlobalErr" style="min-height:18px;color:rgba(244,63,94,.95)"></div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="loading-overlay" id="pageLoader" aria-hidden="true">
+      <div class="glass loading-card">
+        <div class="loading-title" id="loaderTitle">MindVault</div>
+        <div class="loading-sub" id="loaderSub">Syncing your session…</div>
+        <div class="bar"><i></i></div>
+      </div>
+    </div>
+
+    <script src="./js/auth.js"></script>
+  </body>
+</html>

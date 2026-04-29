@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>MindVault — Dashboard Access</title>
+    <link rel="stylesheet" href="./css/main.css" />
+  </head>
+  <body>
+    <canvas class="neural-bg" id="neural"></canvas>
+
+    <div class="app-shell">
+      <div class="glass form-wrap">
+        <div class="logo">
+          <div class="logo-mark" aria-hidden="true">🧠</div>
+          <div class="logo-title">MindVault</div>
+          <div class="logo-sub">Dashboard access</div>
+        </div>
+
+        <div class="hint" id="modeHint" style="margin-top:10px; opacity:.9">
+          Create a local ID + password to unlock the dashboard on this device.
+        </div>
+
+        <form class="form" id="gateForm" novalidate style="margin-top:14px">
+          <div class="field">
+            <div class="label"><span>Local ID</span></div>
+            <input id="gateId" type="text" autocomplete="username" placeholder="e.g. admin" />
+            <div class="error" id="gateIdErr"></div>
+          </div>
+
+          <div class="field">
+            <div class="label"><span>Password</span></div>
+            <input id="gatePassword" type="password" autocomplete="current-password" placeholder="••••••••" />
+            <div class="error" id="gatePasswordErr"></div>
+          </div>
+
+          <div class="field" id="confirmWrap" style="display:none">
+            <div class="label"><span>Confirm Password</span></div>
+            <input id="gateConfirm" type="password" autocomplete="new-password" placeholder="Repeat password" />
+            <div class="error" id="gateConfirmErr"></div>
+          </div>
+
+          <button class="btn" id="gateBtn" type="submit">Continue</button>
+
+          <div class="hint" id="gateGlobal" style="min-height:18px;color:rgba(244,63,94,.95)"></div>
+          <div class="hint" id="resetHint" style="min-height:18px; opacity:.85"></div>
+        </form>
+      </div>
+    </div>
+
+    <script src="./js/gate.js"></script>
+  </body>
+</html>
+
